@@ -1,0 +1,31 @@
+// Augment Code — merge into ~/.augment/settings.json
+// (or add via CLI, see examples/README.md "Augment").
+//
+// Augment owns its context window and has its own Context Engine + Memories, so:
+//  - mode = passthrough (the server can't shrink Augment's window)
+//  - the high-value tool here is `recall` (semantic) — it stops Augment re-retrieving what's
+//    already proven/offloaded. Pair with re-seed (handoff_brief) for actual token relief.
+//  - enableToolSearch keeps Augment from loading all 19 tool schemas up front.
+//
+// Strip these comments — settings.json must be valid JSON.
+{
+  "enableToolSearch": true,
+  "mcpServers": {
+    "compaction": {
+      "command": "node",
+      "args": ["${workspaceFolder}/compaction-mcp/dist/index.js"],
+      "env": {
+        "COMPACTION_MODE": "passthrough",
+        "COMPACTION_ALLOWED_ROOTS": "${workspaceFolder}",
+
+        "COMPACTION_SUMMARIZER": "direct",
+        "COMPACTION_LLM_BASE_URL": "http://localhost:11434/v1",
+        "COMPACTION_LLM_MODEL": "qwen2.5-coder:14b",
+
+        "COMPACTION_RECALL_MODE": "auto",
+        "COMPACTION_EMBED_MODEL": "nomic-embed-text",
+        "COMPACTION_EMBED_BASE_URL": "http://localhost:11434/v1"
+      }
+    }
+  }
+}

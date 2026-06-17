@@ -11,9 +11,10 @@ truncation), re-hydrate live files from disk, persist session-long rules and a
 hooks.
 
 See [`SPEC.md`](./SPEC.md) for the full protocol design and the host/server
-responsibility split, and [`ENTERPRISE.md`](./ENTERPRISE.md) for deploying under
+responsibility split, [`ENTERPRISE.md`](./ENTERPRISE.md) for deploying under
 **GitHub Copilot Enterprise** (org policy gates, MCP registry, in-tenant summarizer,
-distribution).
+distribution), and [`runbooks/`](./runbooks/) for step-by-step operational guides for each
+strategy (offload, recall, compact, re-seed, auto-compact, hooks/ledger).
 
 ## Why a server can't just "do" `/compact`
 
