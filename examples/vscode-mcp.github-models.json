@@ -1,0 +1,30 @@
+// Copy to .vscode/mcp.json — NO Ollama. Copilot-only setup: the summarizer call is
+// routed to GitHub Models (free, OpenAI-compatible). VS Code prompts for the token once
+// and stores it encrypted, so it never lands in version control.
+//
+// Token: GitHub > Settings > Developer settings > Fine-grained PAT, with scope `models: read`.
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "gh-models-token",
+      "description": "GitHub token with `models: read` scope (for compaction summaries)",
+      "password": true
+    }
+  ],
+  "servers": {
+    "compaction": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/compaction-mcp/dist/index.js"],
+      "env": {
+        "COMPACTION_SUMMARIZER": "direct",
+        "COMPACTION_LLM_BASE_URL": "https://models.github.ai/inference",
+        "COMPACTION_LLM_MODEL": "openai/gpt-4o-mini",
+        "COMPACTION_LLM_API_KEY": "${input:gh-models-token}",
+        "COMPACTION_MODE": "passthrough",
+        "COMPACTION_ALLOWED_ROOTS": "${workspaceFolder}"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+// Merge into claude_desktop_config.json
+//   macOS:   ~/Library/Application Support/Claude/claude_desktop_config.json
+//   Windows: %APPDATA%\Claude\claude_desktop_config.json
+//
+// Claude Desktop supports MCP sampling, so the summary can run on the host's own model
+// via `auto` — no Ollama, no API key, no extra endpoint.
+{
+  "mcpServers": {
+    "compaction": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/compaction-mcp/dist/index.js"],
+      "env": {
+        "COMPACTION_SUMMARIZER": "auto",
+        "COMPACTION_MODE": "passthrough",
+        "COMPACTION_ALLOWED_ROOTS": "/ABSOLUTE/PATH/TO/your-project"
+      }
+    }
+  }
+}

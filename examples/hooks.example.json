@@ -1,0 +1,16 @@
+{
+  "PreCompact": [
+    {
+      "command": "scripts/dump-progress.sh",
+      "timeoutMs": 5000,
+      "continueOnError": false
+    }
+  ],
+  "PostCompact": [
+    {
+      "command": "scripts/reinject-ledger.sh",
+      "timeoutMs": 5000,
+      "continueOnError": true
+    }
+  ]
+}

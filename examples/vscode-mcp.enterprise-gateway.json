@@ -1,0 +1,35 @@
+// Copy to .vscode/mcp.json — ENTERPRISE setup.
+// The summary call goes to an internal OpenAI-compatible LLM gateway (LiteLLM, Portkey,
+// Kong/Cloudflare AI Gateway, or Azure OpenAI fronted by one) so source code + transcript
+// never leave the company tenant/VPC.
+//
+// `COMPACTION_LLM_HEADERS` carries any non-Bearer auth/routing headers the gateway needs.
+// Examples below (uncomment what your gateway uses):
+//   Azure OpenAI direct:   {"api-key": "${input:llm-key}"}
+//   Virtual-key gateway:   {"Authorization": "Bearer ${input:llm-key}", "x-portkey-virtual-key": "vk_..."}
+//   Tenant routing:        {"x-tenant-id": "team-platform"}
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "llm-key",
+      "description": "Internal LLM gateway key (for compaction summaries)",
+      "password": true
+    }
+  ],
+  "servers": {
+    "compaction": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/compaction-mcp/dist/index.js"],
+      "env": {
+        "COMPACTION_SUMMARIZER": "direct",
+        "COMPACTION_LLM_BASE_URL": "https://llm-gateway.internal.example.com/v1",
+        "COMPACTION_LLM_MODEL": "gpt-4o-mini",
+        "COMPACTION_LLM_HEADERS": "{\"Authorization\": \"Bearer ${input:llm-key}\"}",
+        "COMPACTION_MODE": "passthrough",
+        "COMPACTION_ALLOWED_ROOTS": "${workspaceFolder}"
+      }
+    }
+  }
+}

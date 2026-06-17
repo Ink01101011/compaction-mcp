@@ -1,0 +1,17 @@
+// Copy to .vscode/mcp.json — LOCAL summarizer via Ollama (nothing leaves the machine).
+{
+  "servers": {
+    "compaction": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/compaction-mcp/dist/index.js"],
+      "env": {
+        "COMPACTION_SUMMARIZER": "direct",
+        "COMPACTION_LLM_BASE_URL": "http://localhost:11434/v1",
+        "COMPACTION_LLM_MODEL": "qwen2.5-coder:14b",
+        "COMPACTION_MODE": "passthrough",
+        "COMPACTION_ALLOWED_ROOTS": "${workspaceFolder}"
+      }
+    }
+  }
+}
